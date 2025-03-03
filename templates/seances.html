@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des Séances</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+            color: #343a40;
+        }
+        h1 {
+    font-weight: 700; /* Rend le texte plus épais */
+    font-size: 2.5rem; /* Augmente légèrement la taille */
+    text-transform: uppercase; /* Met en majuscules pour un effet plus structuré */
+    letter-spacing: 1px; /* Espacement entre les lettres pour un meilleur rendu */
+    color: #1046bb; /* Bleu foncé pour un bon contraste */
+    text-shadow: 3px 3px 5px rgba(67, 196, 196, 0.89); /* Légère ombre pour donner du relief */
+    text-align: center;
+}
+        .form-group label {
+            font-weight: 600;
+        }
+        .form-control {
+            border-radius: 5px;
+        }
+        .table {
+            background-color: white;
+        }
+        .table th {
+            background-color: #007bff;
+            color: white;
+            text-align: center;
+        }
+        .table tbody tr:hover {
+            background-color: #e9ecef;
+        }
+        .btn-warning {
+            background-color: #ffc107;
+            border: none;
+        }
+        .btn-danger {
+            background-color: #dc3545;
+            border: none;
+        }
+    </style>
+</head>
+<body class="container">
+    <h1 class="my-4">Liste des Séances</h1>
+    <div class="form-group">
+        <label for="site-filter">Filtrer par site:</label>
+        <select id="site-filter" class="form-control">
+            <option value="">Tous les sites</option>
+            <option value="ESGIS Avédji">ESGIS Avédji</option>
+            <option value="ESGIS Adjidogome">ESGIS Adjidogome</option>
+            <option value="ESGIS Kodjeviakopé">ESGIS Kodjeviakopé</option>
+        </select>
+    </div>
+    <form action="/search_seance" method="GET" class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2" type="search" placeholder="Rechercher une séance" aria-label="Rechercher" name="query">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Rechercher</button>
+    </form>
+    <table class="table table-bordered text-center" id="seance-table">
+        <thead>
+            <tr>
+                <th>Nom du Professeur</th>
+                <th>Prénom du Professeur</th>
+                <th>Matière</th>
+                <th>Filière</th>
+                <th>Date</th>
+                <th>Heure de début</th>
+                <th>Heure de fin</th>
+                <th>Nombre d'heures</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for seance in seances %}
+            <tr>
+                <td>{{ seance.professeur.nom }}</td>
+                <td>{{ seance.professeur.prenom }}</td>
+                <td>{{ seance.matiere }}</td>
+                <td>{{ seance.filiere }}</td>
+                <td>{{ seance.heure_debut.date() }}</td>
+                <td>{{ seance.heure_debut.time() }}</td>
+                <td>{{ seance.heure_fin.time() }}</td>
+                <td>{{ (seance.heure_fin - seance.heure_debut).seconds / 3600 }}</td>
+                <td>
+                    <a href="/edit_seance/{{ seance.id }}" class="btn btn-warning btn-sm">Modifier</a>
+                    <a href="/delete_seance/{{ seance.id }}" class="btn btn-danger btn-sm">Supprimer</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('#site-filter').change(function(){
+                var site = $(this).val();
+                window.location.href = '/seances?site=' + site;
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function(){
+            $('#search').keyup(function(){
+                var query = $(this).val();
+                $.ajax({
+                    url: '/search_seance',
+                    data: {query: query},
+                    success: function(data){
+                        $('#seance-table').html(data);
+                    }
+                });
+            });
+        });
+    </script>
+
+<a href="/" class="btn btn-primary" style="position: fixed; top: 10px; right: 10px;">Retour à l'accueil</a>
+
+</body>
+</html>

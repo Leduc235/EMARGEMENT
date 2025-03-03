@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modifier le Professeur</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Poppins', sans-serif;
+        }
+        .container {
+            max-width: 600px;
+            margin-top: 50px;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+    font-weight: 700; /* Rend le texte plus épais */
+    font-size: 2.5rem; /* Augmente légèrement la taille */
+    letter-spacing: 1px; /* Espacement entre les lettres pour un meilleur rendu */
+    color: #1046bb; /* Bleu foncé pour un bon contraste */
+    text-shadow: 3px 3px 5px rgba(67, 196, 196, 0.89); /* Légère ombre pour donner du relief */
+    text-align: center;
+}
+        .btn-primary {
+            width: 100%;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="my-4">Modifier le Professeur</h1>
+        <form action="/edit_professeur/{{ professeur.id }}" method="POST" class="needs-validation" novalidate>
+            <div class="form-group">
+                <label for="nom">Nom:</label>
+                <input type="text" id="nom" name="nom" class="form-control" value="{{ professeur.nom }}" required>
+                <div class="invalid-feedback">Veuillez entrer le nom.</div>
+            </div>
+            <div class="form-group">
+                <label for="prenom">Prénom:</label>
+                <input type="text" id="prenom" name="prenom" class="form-control" value="{{ professeur.prenom }}" required>
+                <div class="invalid-feedback">Veuillez entrer le prénom.</div>
+            </div>
+            <div class="form-group">
+                <label for="matiere">Matière:</label>
+                <input type="text" id="matiere" name="matiere" class="form-control" value="{{ professeur.matiere }}" required>
+                <div class="invalid-feedback">Veuillez entrer la matière.</div>
+            </div>
+            <div class="form-group">
+                <label for="filiere">Filière:</label>
+                <input type="text" id="filiere" name="filiere" class="form-control" value="{{ professeur.filiere }}" required>
+                <div class="invalid-feedback">Veuillez entrer la filière.</div>
+            </div>
+            <button type="submit" class="btn btn-primary">Modifier</button>
+        </form>
+    </div>
+</body>
+</html>

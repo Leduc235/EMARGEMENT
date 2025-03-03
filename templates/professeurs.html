@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des Professeurs</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+            color: #343a40;
+        }
+        h1 {
+    font-weight: 700; /* Rend le texte plus épais */
+    font-size: 2.5rem; /* Augmente légèrement la taille */
+    text-transform: uppercase; /* Met en majuscules pour un effet plus structuré */
+    letter-spacing: 1px; /* Espacement entre les lettres pour un meilleur rendu */
+    color: #1046bb; /* Bleu foncé pour un bon contraste */
+    text-shadow: 3px 3px 5px rgba(67, 196, 196, 0.89); /* Légère ombre pour donner du relief */
+    text-align: center;
+}
+        .table {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+            text-align: center;
+        }
+        td {
+            text-align: center;
+        }
+        .btn-warning {
+            color: rgb(17, 0, 0);
+            font-weight: bold;
+        }
+        .btn-danger {
+            font-weight: bold;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body class="container">
+    <h1 class="my-4">Liste des Professeurs</h1>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Matière</th>
+                <th>Filière</th>
+                <th>Total des heures</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for professeur in professeurs %}
+            <tr>
+                <td>{{ professeur.id }}</td>
+                <td>{{ professeur.nom }}</td>
+                <td>{{ professeur.prenom }}</td>
+                <td>{{ professeur.matiere }}</td>
+                <td>{{ professeur.filiere }}</td>
+                <td>{{ professeur.total_heures }}</td>
+                <td>
+                    <a href="/edit_professeur/{{ professeur.id }}" class="btn btn-warning btn-sm">Modifier</a>
+                    <a href="/delete_professeur/{{ professeur.id }}" class="btn btn-danger btn-sm">Supprimer</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="/" class="btn btn-primary" style="position: fixed; top: 10px; right: 10px;">Retour à l'accueil</a>
+
+</body>
+</html>
